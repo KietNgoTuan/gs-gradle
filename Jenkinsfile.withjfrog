@@ -7,12 +7,12 @@ node {
   }
   stage('build') {
      myGradleContainer.inside("-v ${env.HOME}/.gradle:/home/gradle/.gradle") {
-       sh 'cd complete && apk add bash && ./gradlew build'
+       sh 'cd complete && apk update && apk add bash && ./gradlew build'
      }
   }
   stage('test') {
      myGradleContainer.inside("-v ${env.HOME}/.gradle:/home/gradle/.gradle") {
-       sh ' apk update && cd complete && ./gradlew test'
+       sh ' cd complete && ./gradlew test'
      }
   }
   stage('publish') {
