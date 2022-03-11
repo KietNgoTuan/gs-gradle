@@ -1,6 +1,6 @@
 node {
   def server = Artifactory.server 'kietngotuan.jfrog.io'
-  def myGradleContainer = docker.image('gradle')
+  def myGradleContainer = docker.image('gradle:jdk8-alpine')
   myGradleContainer.pull()
   stage('prep') {
     checkout scm
@@ -12,7 +12,7 @@ node {
   }
   stage('test') {
      myGradleContainer.inside("-v ${env.HOME}/.gradle:/home/gradle/.gradle") {
-       sh 'cd complete && ./gradlew test'
+       sh ' apk update && apk add bash && cd complete && ./gradlew test'
      }
   }
   stage('publish') {
